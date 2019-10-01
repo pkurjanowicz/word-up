@@ -29,7 +29,7 @@
             <div id="scoreboard">
                 <div>
                     <h5>Time Remaining</h5>
-                    <h2 class="scoreboard-data">60</h2>
+                    <h2 class="scoreboard-data">{{ secondsRemaining }}</h2>
                     <!-- TODO 2
                     Make the time remaining update with the correct value
                     -->
@@ -43,19 +43,19 @@
             <!-- TODO 1
             Make a "New Game" button
             -->
+            <button class="new-game-button" @click="startGame">New Game</button>
         </section>
 
         <!-- things that should not show up until the (first) game has started -->
         <section id="game">
 
-            <!-- TODO 4
-            Add some instructions so the user knows what to do.
-            -->
+            <p>Spell as many words as you can, using only these letters:</p>
 
             <div class="letter-chips">
                 <!-- TODO 5
                 Fill this container with a <letter-chip> for each value in allowedLetters
                 -->
+                <letter-chip v-for="letter in allowedLetters" v-bind:letter="letter" v-bind:value="letterScore(letter)"></letter-chip>
 
             </div>
 
@@ -65,7 +65,7 @@
                 :class="{ 'contains-disallowed': !containsOnlyAllowedLetters }"
             >
                 <!-- the actual text box where the user types -->
-                <input type="text" />
+                <input type="text" ref="input"/>
                 <!-- TODO 3 make this input autofocused when it's created. -->
                 <!-- TODO 6 keep this in sync with the "currentAttempt" value in your Vue. -->
                 <!-- TODO 9 disable the input when the timer runs out -->

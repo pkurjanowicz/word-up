@@ -179,6 +179,9 @@ var app = new Vue({
             //TODO 7 actually check if the letter is disallowed
             return false;
         },
+        setFocus: function() {
+            
+        },
 
         // The next couple lines are odd.
         // It seems like they're not doing anything useful.
@@ -208,6 +211,7 @@ var app = new Vue({
             this.wordSubmissions = [];
             this.currentAttempt = '';
             this.timer = this.startTimer();
+            this.$refs.input.focus();
         },
         endGame: function() {
             this.stopTimer();
