@@ -55,7 +55,7 @@
                 <!-- TODO 5
                 Fill this container with a <letter-chip> for each value in allowedLetters
                 -->
-                <letter-chip v-for="letter in allowedLetters" v-bind:letter="letter" v-bind:value="letterScore(letter)"></letter-chip>
+                <letter-chip v-for="letter in allowedLetters" :letter="letter" :value="letterScore(letter)"></letter-chip>
 
             </div>
 
@@ -65,7 +65,7 @@
                 :class="{ 'contains-disallowed': !containsOnlyAllowedLetters }"
             >
                 <!-- the actual text box where the user types -->
-                <input type="text" ref="input"/>
+                <input type="text" ref="input" v-model="currentAttempt" :disabled="gameInProgress === false" @keyup.enter="addNewWordSubmission(currentAttempt)"/>
                 <!-- TODO 3 make this input autofocused when it's created. -->
                 <!-- TODO 6 keep this in sync with the "currentAttempt" value in your Vue. -->
                 <!-- TODO 9 disable the input when the timer runs out -->
@@ -74,11 +74,13 @@
                 <br>
                 <div class="disallowed-letters">
                     <!-- TODO 8 add a <span> for each disallowed letter here -->
+                    <span v-for="letter in disallowedLettersInWord">{{ letter }}</span>
                 </div>
             </div>
 
             <!-- a container to display the user's word submissions -->
             <div id="word-submissions">
+                    <submitted-word v-for="data in wordSubmissions" :word="data.word" :score="wordScore(data.word)"></submitted-word>
                 <!-- TODO 11 add a <submitted-word> component for each word here -->
             </div>
         </section>

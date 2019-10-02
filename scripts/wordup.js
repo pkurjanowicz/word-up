@@ -171,13 +171,18 @@ var app = new Vue({
     },
     methods: {
         isDisallowedLetter: function(letter) {
+            if (this.allowedLetters.includes(letter)) {
+                return false;
+            } else {
+                return true;
+            }
             /**
              * Given a letter, checks whether that letter is "disallowed"
              * meaning it is not a member of the .allowedLetters list from the current data
              */
 
             //TODO 7 actually check if the letter is disallowed
-            return false;
+            
         },
         setFocus: function() {
             
@@ -241,6 +246,7 @@ var app = new Vue({
                 // when the api call comes back, we can update loading and isRealWord.
                 this.checkIfWordIsReal(word);
             }
+            this.currentAttempt = '';
             // TODO 10
             // now that we've added the word, clear out the text input.
         },
@@ -253,10 +259,16 @@ var app = new Vue({
              */
 
             // TODO 12 what should the url be?
-            fetch(`www.example.com`)
+            fetch(`https://od-api.oxforddictionaries.com/api/v2/lemmas/en/${word}`, {
+                    headers: {
+                            "Accept": "application/json",
+                            "app_id": "f66ef4b8",
+                            "app_key": "ffe0f874921c7f42557f27fbbba69ff9"
+                        }
+            })
                 .then(response => (response.ok ? response.json() : Promise.reject(response)))
                 .then(resp => {
-                    console.log("We received a response from Pearson!");
+                    console.log("We received a response from Oxford!");
 
                     // let's print the response to the console so we can take a looksie
                     console.log(resp);
